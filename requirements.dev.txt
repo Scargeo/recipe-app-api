@@ -1,2 +1,2 @@
 #flake8 version
-Fake8>=3.9.2,<7.1.0
+flake8>=4.0.1,<4.1
