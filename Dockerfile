@@ -20,9 +20,9 @@ ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     # install postgresql client
-    apk add --update --non-cache postgresql-client && \
+    apk add --update --no-cache postgresql-client && \
     # download virtual dependency packages
-    apk add ---update --no-cache --virtual .tmp-build-deps \
+    apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     #condition to install dev dependencies if DEV is true
