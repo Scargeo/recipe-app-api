@@ -19,6 +19,11 @@ ARG DEV=false
 # creating virtual environment for the project to store dependencies
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    # install postgresql client
+    apk add --update --non-cache postgresql-client && \
+    # download virtual dependency packages
+    apk add ---update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     #condition to install dev dependencies if DEV is true
     if [ $DEV = "true" ]; \
@@ -26,6 +31,7 @@ RUN python -m venv /py && \
     fi && \
     # rm -rf /tmp removes the temporary files
     rm -rf /tmp && \
+    apk del .tmp-build-deps && \
     #add new user to prevent the use of root user
     adduser \
         --disabled-password \
